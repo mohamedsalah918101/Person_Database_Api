@@ -43,7 +43,7 @@ class _EditPersonState extends State<EditPerson> {
             TextField(
               controller: _personIDController,
               decoration: InputDecoration(labelText: 'Person ID'),
-              enabled: false,
+              keyboardType: TextInputType.number,
             ),
             TextField(
               controller: _nameController,
@@ -77,15 +77,17 @@ class _EditPersonState extends State<EditPerson> {
               decoration: InputDecoration(labelText: 'Nationality ID'),
               keyboardType: TextInputType.number,
             ),
+            SizedBox(height: 30,),
             ElevatedButton(
+              style: ButtonStyle(backgroundColor: MaterialStateProperty.all(Colors.green)),
               onPressed: () {
                 // Save changes and call editPerson function
                 Person editedPerson = Person(
-                  personID: widget.person.personID,
+                  personID: int.parse(_personIDController.text),
                   name: _nameController.text,
                   birthDate: DateTime.parse(_birthDateController.text),
                   age: double.parse(_ageController.text),
-                  nationalityID: widget.person.nationalityID,
+                  nationalityID: int.parse(_nationalityIDController.text),
                 );
                 editPerson(editedPerson).then((success) {
                   if (success) {
@@ -109,7 +111,7 @@ class _EditPersonState extends State<EditPerson> {
                   }
                 });
               },
-              child: Text('Save'),
+              child: Text('Save', style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 25),),
             ),
           ],
         ),

@@ -69,8 +69,9 @@ class _AddPersonState extends State<AddPerson> {
                 decoration: InputDecoration(labelText: 'Nationality ID'),
                 keyboardType: TextInputType.number,
               ),
-              SizedBox(height: 20),
+              SizedBox(height: 30),
               ElevatedButton(
+                style: ButtonStyle(backgroundColor: MaterialStateProperty.all(Colors.green)),
                 onPressed: () {
                   // Validate input and call addPerson function
                   if (
@@ -97,7 +98,7 @@ class _AddPersonState extends State<AddPerson> {
                     );
                   }
                 },
-                child: Text('Add Person'),
+                child: Text('Add Person', style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 25),),
               ),
             ],
           ),

@@ -64,86 +64,93 @@ class _ViewPersonsState extends State<ViewPersons> {
               return ListView.builder(
                 itemCount: persons.length,
                 itemBuilder: (context, index) {
-                  return ListTile(
-                    title: Text(persons[index].name),
-                    subtitle: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text('Person ID: ${persons[index].personID}'),
-                        Text('Nationality ID: ${persons[index].nationalityID}'),
-                        Text('Age: ${persons[index].age.toStringAsFixed(1)}'),
-                      ],
+                  return Container(
+                    margin: EdgeInsets.all(4),
+                    decoration: BoxDecoration(
+                      border: Border.all(color: Colors.black, width: 5),
+                      borderRadius: BorderRadius.circular(10)
                     ),
-                    trailing: Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        IconButton(
-                          icon: Icon(Icons.delete),
-                          onPressed: () {
-                            showDialog(
-                              context: context,
-                              builder: (context) => AlertDialog(
-                                title: Text('Confirm Deletion'),
-                                content: Text('Are you sure you want to delete this person?'),
-                                actions: [
-                                  TextButton(
-                                    onPressed: () {
-                                      Navigator.of(context).pop();
-                                    },
-                                    child: Text('Cancel'),
-                                  ),
-                                  TextButton(
-                                    onPressed: () {
-                                      deletePerson(persons[index].personID).then((success) {
-                                        if (success) {
-                                          setState(() {
-                                            persons.removeAt(index);
-                                          });
-                                          Navigator.of(context).pop();
-                                        } else {
-                                          showDialog(
-                                            context: context,
-                                            builder: (context) => AlertDialog(
-                                              title: Text('Error'),
-                                              content: Text('Failed to delete person.'),
-                                              actions: [
-                                                TextButton(
-                                                  onPressed: () {
-                                                    Navigator.of(context).pop();
-                                                  },
-                                                  child: Text('OK'),
-                                                ),
-                                              ],
-                                            ),
-                                          );
-                                        }
-                                      });
-                                    },
-                                    child: Text('Delete'),
-                                  ),
-                                ],
-                              ),
-                            );
-                          },
-                        ),
-        
-                        IconButton(
-                          icon: Icon(Icons.edit),
-                          onPressed: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(builder: (context) => EditPerson(person: persons[index])),
-                            ).then((editedPerson) {
-                              if (editedPerson != null) {
-                                setState(() {
-                                  persons[index] = editedPerson;
-                                });
-                              }
-                            });
-                          },
-                        ),
-        
-                      ],
+                    child: ListTile(
+                      title: Text(persons[index].name, style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),),
+                      subtitle: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text('Person ID: ${persons[index].personID}'),
+                          Text('Nationality ID: ${persons[index].nationalityID}'),
+                          Text('Age: ${persons[index].age.toStringAsFixed(1)}'),
+                        ],
+                      ),
+                      trailing: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          IconButton(
+                            icon: Icon(Icons.delete, color: Colors.red,),
+                            onPressed: () {
+                              showDialog(
+                                context: context,
+                                builder: (context) => AlertDialog(
+                                  title: Text('Confirm Deletion'),
+                                  content: Text('Are you sure you want to delete this person?'),
+                                  actions: [
+                                    TextButton(
+                                      onPressed: () {
+                                        Navigator.of(context).pop();
+                                      },
+                                      child: Text('Cancel'),
+                                    ),
+                                    TextButton(
+                                      onPressed: () {
+                                        deletePerson(persons[index].personID).then((success) {
+                                          if (success) {
+                                            setState(() {
+                                              persons.removeAt(index);
+                                            });
+                                            Navigator.of(context).pop();
+                                          } else {
+                                            showDialog(
+                                              context: context,
+                                              builder: (context) => AlertDialog(
+                                                title: Text('Error'),
+                                                content: Text('Failed to delete person.'),
+                                                actions: [
+                                                  TextButton(
+                                                    onPressed: () {
+                                                      Navigator.of(context).pop();
+                                                    },
+                                                    child: Text('OK'),
+                                                  ),
+                                                ],
+                                              ),
+                                            );
+                                          }
+                                        });
+                                      },
+                                      child: Text('Delete'),
+                                    ),
+                                  ],
+                                ),
+                              );
+                            },
+                          ),
+
+                          IconButton(
+                            icon: Icon(Icons.edit, color: Colors.green,),
+                            onPressed: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(builder: (context) => EditPerson(person: persons[index])),
+                              ).then((editedPerson) {
+                                if (editedPerson != null) {
+                                  setState(() {
+                                    persons[index] = editedPerson;
+                                  });
+                                }
+                              });
+                            },
+                          ),
+
+                        ],
+                      ),
                     ),
                   );
                 },
